@@ -11,7 +11,7 @@ let getpost = async (req, res) => {
     }
     try{
     let post=await Post.find(req.body);
-    return res.status(200).json({success:true,msg:post});
+    return res.status(200).json({success:true,data:post});
     }
     catch(error){
         res.status(401).json({success:false,msg:error.message});
@@ -29,10 +29,12 @@ let addpost = async(req, res) => {
     try{
         // let post=req.body;
         let newpost=req.body
+        console.log(newpost);
         let savedpost=new Post(newpost);
         await savedpost.save()
-        res.status(200).json({success:true,msg:"post added"})
+        res.status(200).json({success:true,msg:"post added",data:newpost})
     }catch(error){
+        console.log("gheye");
         res.status(500).json({success:false,msg:error.message})
     }
 }
