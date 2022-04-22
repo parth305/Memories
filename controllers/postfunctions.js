@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+const { default: mongoose } = require("mongoose");
 
 const Post = require("../model/postmodel");
 let getpost = async (req, res) => {
@@ -39,4 +40,19 @@ let addpost = async(req, res) => {
     }
 }
 
-module.exports = { getpost, addpost }
+let updatepost=async (req,res)=>{
+    let {id:_id}=req.params;
+
+    let post=req.body
+    try{
+    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({success:false,data:"No post found"});
+
+    let updatedpost=await Post.findByIdAndUpdate(_id,post,{new:true});
+    res.status(200).json({success:true,data:updatedpost});
+    }
+    catch(error){
+        res.status(500).json({success:false,data:"internal server error"})
+    }
+}
+
+module.exports = { getpost, addpost,updatepost }
