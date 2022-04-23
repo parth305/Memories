@@ -1,4 +1,5 @@
 const { validationResult } = require("express-validator");
+const { default: mongoose } = require("mongoose");
 
 const Post = require("../model/postmodel");
 let getpost = async (req, res) => {
@@ -11,7 +12,7 @@ let getpost = async (req, res) => {
     }
     try{
     let post=await Post.find(req.body);
-    return res.status(200).json({success:true,msg:post});
+    return res.status(200).json({success:true,data:post});
     }
     catch(error){
         res.status(401).json({success:false,msg:error.message});
@@ -29,12 +30,55 @@ let addpost = async(req, res) => {
     try{
         // let post=req.body;
         let newpost=req.body
+        console.log(newpost);
         let savedpost=new Post(newpost);
         await savedpost.save()
-        res.status(200).json({success:true,msg:"post added"})
+        res.status(200).json({success:true,msg:"post added",data:newpost})
     }catch(error){
+        console.log("gheye");
         res.status(500).json({success:false,msg:error.message})
     }
 }
 
-module.exports = { getpost, addpost }
+let updatepost=async (req,res)=>{
+    let {id:_id}=req.params;
+
+    let post=req.body
+    try{
+    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({success:false,data:"No post found"});
+
+    let updatedpost=await Post.findByIdAndUpdate(_id,post,{new:true});
+    res.status(200).json({success:true,data:updatedpost});
+    }
+    catch(error){
+        res.status(500).json({success:false,data:"internal server error"})
+    }
+}
+let deletepost=async (req,res)=>{
+    let {id:_id}=req.params;
+    try{
+        if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({success:false,data:"No post found"});
+        await Post.findByIdAndDelete(_id);
+        res.status(200).json({success:true,data:"deleted successfully"});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({success:false,data:"internal server error"})
+    }
+}
+let likepost=async (req,res)=>{
+    let {id:_id}=req.params;
+
+    try{
+    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({success:false,data:"No post found"});
+
+    let post=await Post.findById(_id);
+    let newpost=await Post.findByIdAndUpdate(_id,{likecount:post.likecount+1},{new:true})
+    res.status(200).json({success:true,data:newpost});
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({success:false,data:"internal server error"})
+    }
+
+}
+module.exports = { getpost, addpost,updatepost,deletepost,likepost}

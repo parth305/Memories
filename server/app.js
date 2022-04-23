@@ -3,7 +3,7 @@ const express=require("express");
 const cors=require("cors")
 const { default: mongoose } = require("mongoose");
 const postrouter=require("./Routes/postroutes")
-
+const dotenv=require("dotenv")
 const app=express();
 const port=3030;
 
@@ -11,11 +11,12 @@ const port=3030;
 app.use(bodyParser.json({limit:"30mb",extented:true}))
 app.use(bodyParser.urlencoded({limit:"30mb",extented:true}))
 app.use(cors());
+dotenv.config();
 
 app.use("/post",postrouter);
 
-// const url="mongodb+srv://bhyu:305Database@cluster0.yv9d2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-const url='mongodb://localhost/bhyu'
+url=process.env.MONGO_URL
+url=process.env.LOCAL_DB
 mongoose.connect(url).then(() => {
     app.listen(port,()=>{
         console.log("app started")
