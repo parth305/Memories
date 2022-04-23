@@ -14,8 +14,8 @@ app.use(cors());
 
 app.use("/post",postrouter);
 
-// const url="mongodb+srv://bhyu:database305@cluster0.yv9d2.mongodb.net/Memoriesdb?retryWrites=true&w=majority"
-const url='mongodb://localhost/bhyu'
+const url="mongodb+srv://bhyu:database305@cluster0.yv9d2.mongodb.net/Memoriesdb?retryWrites=true&w=majority"
+// const url='mongodb://localhost/bhyu'
 mongoose.connect(url).then(() => {
     app.listen(port,()=>{
         console.log("app started")
