@@ -19,3 +19,12 @@ export let creatPost=(Post)=>async (dispatch)=>{
         console.log(error);
     }
 }
+
+export let updatepost=(id,newpost)=> async (dispatch)=>{
+    try {
+        let {data}=await api.updatepost(id,newpost)
+        dispatch({type:"UPDATE",payload:data.data});
+    } catch (error) {
+        console.log(error);
+    }
+}
