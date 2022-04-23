@@ -3,7 +3,7 @@ import useStyles from "./styles";
 import {Typography,Paper,Button,TextField} from "@material-ui/core";
 import Filebase from "react-file-base64";
 import { useDispatch, useSelector } from 'react-redux';
-import { creatPost, updatepost } from '../../State/actioncreators/posts';
+import { creatPost, getPost, updatepost } from '../../State/actioncreators/posts';
 import Postcontext from '../../contextapi/UpdatePost/updatepostcontext';
 
 function Form() {
@@ -24,13 +24,13 @@ function Form() {
         dispatch(updatepost(currentid,postData));
       }else{
       dispatch(creatPost(postData));
+      dispatch(getPost());
       }
       clear();
     }
     let clear=()=>{
       setcurrentid(null)
       setpostData({creator:"",title:"",message:"",tags:"",selectedFile:null})
-      console.log("here",postData);
     }
     let Change=(e)=>setpostData({...postData,[e.target.name]:e.target.value})
   return (

@@ -6,9 +6,12 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import moment from 'moment';
 import PostContext from "../../../contextapi/UpdatePost/updatepostcontext"
+import { useDispatch } from 'react-redux';
+import { deletepost, likepost } from '../../../State/actioncreators/posts';
 function Post({post}) {
   let {setcurrentid}=useContext(PostContext);
     let classes=useStyles();
+  let dispatch= useDispatch();
 
   return (
     <Card className={classes.card}>
@@ -29,8 +32,8 @@ function Post({post}) {
         <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() => {}}><ThumbUpAltIcon fontSize="small" /> Like {post.likeCount} </Button>
-        <Button size="small" color="primary" onClick={() => {}}><DeleteIcon fontSize="small" /> Delete</Button>
+        <Button size="small" color="primary" onClick={() => {dispatch(likepost(post._id))}}><ThumbUpAltIcon fontSize="small" /> &nbsp;Like&nbsp; {post.likecount} </Button>
+        <Button size="small" color="primary" onClick={() => {dispatch(deletepost(post._id))}}><DeleteIcon fontSize="small" /> Delete</Button>
   </CardActions>
     </Card>
   )
