@@ -15,7 +15,7 @@ let postschema=new mongoose.Schema({
     image:String,
     selectedFile:String,
     likecount:{
-        type:String,
+        type:Number,
         default:0
     },
     date:{

@@ -54,5 +54,31 @@ let updatepost=async (req,res)=>{
         res.status(500).json({success:false,data:"internal server error"})
     }
 }
+let deletepost=async (req,res)=>{
+    let {id:_id}=req.params;
+    try{
+        if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({success:false,data:"No post found"});
+        await Post.findByIdAndDelete(_id);
+        res.status(200).json({success:true,data:"deleted successfully"});
+    }catch(error){
+        console.log(error);
+        res.status(500).json({success:false,data:"internal server error"})
+    }
+}
+let likepost=async (req,res)=>{
+    let {id:_id}=req.params;
 
-module.exports = { getpost, addpost,updatepost }
+    try{
+    if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({success:false,data:"No post found"});
+
+    let post=await Post.findById(_id);
+    let newpost=await Post.findByIdAndUpdate(_id,{likecount:post.likecount+1},{new:true})
+    res.status(200).json({success:true,data:newpost});
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({success:false,data:"internal server error"})
+    }
+
+}
+module.exports = { getpost, addpost,updatepost,deletepost,likepost}
