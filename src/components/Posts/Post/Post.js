@@ -32,7 +32,7 @@ function Post({post}) {
         <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() => {dispatch(likepost(post._id))}}><ThumbUpAltIcon fontSize="small" /> &nbsp;Like&nbsp; {post.likecount} </Button>
+        <Button size="small" color="primary" onClick={() => {dispatch(likepost(post._id))}}><ThumbUpAltIcon fontSize="small" /> &nbsp;Like&nbsp; {post.likes.length} </Button>
         <Button size="small" color="primary" onClick={() => {dispatch(deletepost(post._id))}}><DeleteIcon fontSize="small" /> Delete</Button>
   </CardActions>
     </Card>

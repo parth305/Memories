@@ -1,13 +1,26 @@
 import axios from "axios";
 
-let url="http://localhost:3030/post/";
+let API=axios.create({baseURL:"http://localhost:3030/"})
 
-export let fetchposts=()=>axios.get(url);
+let url="post/";
 
-export let creatPost=(newPost)=>axios.post(url,newPost);
+let userurl="user/";
+export let singin=(formdata)=>API.post(`${userurl}signin`,formdata);
 
-export let updatepost=(id,updatedpost)=>axios.patch(`${url}${id}`,updatedpost);
+export let signup=(formdata)=>API.post(`${userurl}signup`,formdata);
+API.interceptors.request.use((req)=>{
+    if(localStorage.getItem("token")){
+        req.headers.Authorization=`Bearer ${localStorage.getItem("token")}`;
+    }
+    return req
+})
+export let fetchposts=()=>API.get(url);
 
-export let deletepost=(id)=>axios.delete(`${url}${id}`);
+export let creatPost=(newPost)=>API.post(url,newPost);
 
-export let likecount=(id)=>axios.patch(`${url}${id}/likepost`);
+export let updatepost=(id,updatedpost)=>API.patch(`${url}${id}`,updatedpost);
+
+export let deletepost=(id)=>API.delete(`${url}${id}`);
+
+export let likecount=(id)=>API.patch(`${url}${id}/likepost`);
+

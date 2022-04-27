@@ -1,36 +1,21 @@
-import React, { useEffect } from "react";
-import {Container,AppBar,Typography,Grow,Grid} from "@material-ui/core"
-import Posts from "./components/Posts/Posts";
-import Form from "./components/From/Form";
-import useStyles from "./styles";
-import { useDispatch } from "react-redux";
-import { getPost } from "./State/actioncreators/posts";
+import React, { useContext } from "react";
+import {Container} from "@material-ui/core"
+import NavBar from "./components/NavBar/NavBar";
+import Home from "./components/Home/Home";
+import { Route, Routes } from "react-router-dom";
+import Auth from "./components/Authentication/Auth";
+import alertcontext from "./contextapi/Alert/alertcontext";
+import Alerts from "./components/Alert/Alert";
 function App() {
-  let classes=useStyles();
-  let disptach=useDispatch();
-  useEffect(()=>{
-    disptach(getPost());
-  },[disptach])
+  let {alert}=useContext(alertcontext);
   return (
     <Container maxWidth="lg">
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography className={classes.heading} align="center" variant="h2">
-          Memories
-          <img className={classes.image} src="http://bit.ly/memories_image" alt="memories" height="60"></img>
-        </Typography>
-      </AppBar>
-      <Grow in>
-        <Container>
-          <Grid container justifyContent="space-between" alignItems="stretch" spacing={4} className={classes.mainContainer}>
-            <Grid item xs={12} sm={7}>
-                <Posts/>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-                <Form/>
-            </Grid>
-          </Grid>
-        </Container>
-      </Grow>
+       <Alerts alert={alert} />
+      <NavBar/>
+      <Routes>
+      <Route exact path="/"  element={<Home/>}></Route>
+      <Route exact path="/auth"  element={<Auth/>}></Route>
+      </Routes>
     </Container>
   );
 }

@@ -14,7 +14,7 @@ export let creatPost=(Post)=>async (dispatch)=>{
     try{
         let {data}=await api.creatPost(Post);
         dispatch({type:CREATE,payload:data.data});
-        
+        dispatch(getPost());   
     }
     catch(error){
         console.log(error);
