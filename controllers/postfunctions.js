@@ -67,12 +67,22 @@ let deletepost=async (req,res)=>{
 }
 let likepost=async (req,res)=>{
     let {id:_id}=req.params;
-
+    if (!req.userId) return res.status(400).json({success:false,data:"unauthenticated"});
     try{
     if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({success:false,data:"No post found"});
-
+    
     let post=await Post.findById(_id);
-    let newpost=await Post.findByIdAndUpdate(_id,{likecount:post.likecount+1},{new:true})
+
+    let index=post.likes.findIndex((id)=>id==req.userId);
+        console.log(index);
+    if(index!==-1){
+        post.likes= post.likes.filter((id)=>id!==req.userId)
+        console.log("kakaka");
+    }
+    else{
+        post.likes.push(req.userId);
+    }
+    let newpost=await Post.findByIdAndUpdate(_id,post,{new:true})
     res.status(200).json({success:true,data:newpost});
     }
     catch(error){
