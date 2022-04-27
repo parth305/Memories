@@ -3,12 +3,18 @@ import { Link, useLocation } from "react-router-dom"
 import { AppBar, Avatar, Typography, Button, Toolbar } from "@material-ui/core"
 import useStyles from "./styles"
 import usercontext from '../../contextapi/user/usercontext';
+import decode from "jwt-decode"
 function NavBar() {
     let classes = useStyles();
     let location=useLocation();
     let { user, setuser } = useContext(usercontext);
     useEffect(() => {
         console.log("hello from nav bar");
+        let token=localStorage.getItem("token");
+        if(token){
+            let decodedata=decode(token);
+            if(decodedata.exp*1000<new Date().getTime()) logout();
+        }
         setuser(JSON.parse(localStorage.getItem("userdata")))
     }, [location])
 
