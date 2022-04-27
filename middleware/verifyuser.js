@@ -3,10 +3,10 @@ const jwt =require("jsonwebtoken");
 
 const JWT_SECERET="THISISSECRET";
 let check=async(req,res,next)=>{
-    let token =req.headers.authorization.split(" ")[1];
-    console.log(token);
-    let isgoogletoken=token.length>500;
     try{
+    let token =req.headers.authorization.split(" ")[1];
+    // console.log(token);
+    let isgoogletoken=token.length>500;
         if(isgoogletoken){
             let decodedata=jwt.decode(token);
             console.log(decodedata);

@@ -20,7 +20,7 @@ let signup=async(req,res)=>{
     return res.status(200).json({data:newuser,token:token,succes:true});
     }
     catch(error){
-        console.log(error);
+        // console.log(error);
         return res.status(500).json({success:false,data:error.message})
     }
     
@@ -38,7 +38,7 @@ let signin=async(req,res)=>{
     let token=jwt.sign({email:user.email,id:user._id},JWT_SECERET);
     return res.status(200).json({data:user,token:token,success:true});
     }catch(error){
-        console.log(error);
+        // console.log(error);
         return res.status(500).json({data:"internal server error",success:false});
     }
 }

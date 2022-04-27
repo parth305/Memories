@@ -30,10 +30,10 @@ let addpost = async(req, res) => {
     try{
         // let post=req.body;
         let newpost=req.body
-        console.log(newpost);
-        let savedpost=new Post(newpost);
+        console.log("ctrateinhg",newpost);
+        let savedpost=new Post({...newpost,creator:req.userId});
         await savedpost.save()
-        res.status(200).json({success:true,msg:"post added",data:newpost})
+        res.status(200).json({success:true,msg:"post added",data:savedpost})
     }catch(error){
         console.log("gheye");
         res.status(500).json({success:false,msg:error.message})

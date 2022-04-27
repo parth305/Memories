@@ -5,8 +5,9 @@ const check = require("../middleware/verifyuser");
 
 const router=express.Router();
 
-router.route("/").get(getpost).post(addpost);
+router.route("/").get(getpost);
 router.use(check)
+router.route("/").post(addpost);
 router.route("/:id").patch(updatepost).delete(deletepost);
 router.route("/:id/likepost").patch(likepost);
 
