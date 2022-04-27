@@ -28,6 +28,7 @@ function Auth() {
         let result = res.profileObj
         let token = res.tokenId
         setuser(result)
+        console.log(result);
         dispatch(Authaction({ result, token }));
         navigate("/")
     }
@@ -42,17 +43,20 @@ function Auth() {
                     console.log("hey");
                     console.log(formData);
                 dispatch(signup(formData,navigate))
-                }
-                else{
-                    if(issignup){
+            }
+            else{
+                if(issignup){
                     showalert("error","password does not match")}
                 }
             }
             else{
+                console.log(formData)
                 dispatch(signin(formData,navigate))
-            }
- 
-       
+            }  
+            setTimeout(() => {
+                setuser(JSON.parse(localStorage.getItem("userdata")));
+                // console.log("this",JSON.parse(localStorage.getItem("userdata")));
+            }, 2000 );
     }
     let handleShowPassowrd = () => {
         if (showpass) {

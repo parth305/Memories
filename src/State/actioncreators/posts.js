@@ -12,7 +12,9 @@ export let getPost=()=>async (dispatch)=>{
 
 export let creatPost=(Post)=>async (dispatch)=>{
     try{
+        console.log("post",Post);
         let {data}=await api.creatPost(Post);
+        console.log("here",data)
         dispatch({type:CREATE,payload:data.data});
         dispatch(getPost());   
     }

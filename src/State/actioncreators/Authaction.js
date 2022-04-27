@@ -10,9 +10,11 @@ export  let Authaction=(data)=>async (dispatch)=>{
 
 export let signup=(formData,navigate)=>async(dispatch)=>{
     try {
+        
         let {data}=await api.signup(formData);
         console.log(data);
         dispatch({type:"SIGNUP",payload:data})
+        
         navigate("/")
     } catch (error) {
         console.log(error);
