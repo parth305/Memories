@@ -102,9 +102,15 @@ let likepost = async (req, res) => {
 let getpostbysearch = async (req, res) => {
     // console.log(req.query);
     let { search, tags } = req.query;
+
     try {
+
         let title = new RegExp(search, "i");
         let posts = []
+
+        let LIMIT=8;
+        let total=await Post.countDocuments();
+
         if (tags === "" && search !== "") {
             posts = await Post.find({ title })
             console.log("one");
@@ -120,13 +126,14 @@ let getpostbysearch = async (req, res) => {
         }
         else {
             console.log("okay");
-            return res.status(200).json({ data: "no data found", success: false })
+            return res.status(200).json({ data: "no data found", success: false,empty:true })
         }
         // console.log(posts);
         if (posts.length === 0) {
             return res.status(200).json({ data: "no data found", success: false })
         }
-        return res.status(200).json({ data: posts, success: true })
+        // return res.status(200).json({ data: posts, success: true })
+        return res.status(200).json({ success: true, data: posts,pagenumber:Number(1),totalPages:Math.ceil(total/LIMIT) });
     } catch (error) {
         console.log(error);
     }
