@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext,useEffect, useState } from 'react'
 import Form from '../From/Form';
 import Posts from '../Posts/Posts';
 import { Grow, Grid, Container, Paper, AppBar, TextField, Button } from "@material-ui/core"
-import { getPostBySearch } from "../../State/actioncreators/posts";
+import { getPost, getPostBySearch } from "../../State/actioncreators/posts";
 import useStyles from "./styles";
 import { useDispatch } from 'react-redux';
 import Paginate from '../pagination/Pagination';
@@ -41,6 +41,7 @@ function Home() {
     }else{
       if(!search.trim()){
         navigate("/posts")
+        disptach(getPost(1))
         // console.log("jjsjj");
       }
     }
@@ -60,13 +61,19 @@ function Home() {
     if(search.trim()!==""||tags.length!==0){
       disptach(getPostBySearch({searchquery:{search:search.trim(),tags:tags.join(",")},showalert}))
       // navigate(`/posts/search?search=${search.trim()||"none"}&tags=${tags}`);
-    }else{
+    }
+    else{
+      disptach(getPost(1))
       navigate("/posts");
     }
   }
-  // useEffect(() => {
-  //   disptach(getPost());
-  // }, [disptach])
+  useEffect(() => {
+    console.log("kaksakskaksalslasl");
+    if(search===""){
+    disptach(getPost());
+    navigate("/posts")
+    }
+  }, [search])
   return (
     <Grow in>
       <Container maxWidth="xl">
@@ -91,10 +98,12 @@ function Home() {
               <Button onClick={searchpost} variant="contained" className={classes.searchbutton} color="primary">Search</Button>
             </AppBar>
             <Form />
+            {
+              search==="" && tags.length===0?
             <Paper className={classes.pagination} elevation={5}>
               <Paginate page={Number(page)} />
-
-            </Paper>
+            </Paper>:null
+}
           </Grid>
         </Grid>
       </Container>

@@ -38,7 +38,7 @@ function Form() {
 
     if(!user){
     return (
-    <Paper className={classes.papaer}>
+    <Paper className={classes.papaer} elevation={6}>
       <Typography variant="h6" align='center'>
         Sign in to create memories and like other peoples memories
       </Typography>
@@ -46,7 +46,7 @@ function Form() {
     }
  
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} elevation={6}>
       <form autoComplete='off' onSubmit={handlesubmit} className={`${classes.root} ${classes.form}`} noValidate>
         <Typography variant='h6'>{currentid ? "Edit" : "Creating"} memories</Typography>
         {/* <TextField name='creator' fullWidth label="Creator" variant='outlined' value={postData.creator} onChange={Change} /> */}

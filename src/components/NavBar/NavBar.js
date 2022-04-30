@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Link, NavLink, useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { AppBar, Avatar, Typography, Button, Toolbar } from "@material-ui/core"
 import useStyles from "./styles"
 import usercontext from '../../contextapi/user/usercontext';
