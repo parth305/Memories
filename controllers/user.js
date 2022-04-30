@@ -14,9 +14,9 @@ let signup=async(req,res)=>{
     let hash=await bcrypt.hash(password,salt);
     // console.log("hey");
     let newuser=await User.create({name:`${firstname} ${lastname}`,email:email,password:hash});
-    console.log(newuser);
+    // console.log(newuser);
     let token=jwt.sign({email:newuser.email,id:newuser._id},JWT_SECERET);
-    console.log(token);
+    // console.log(token);
     return res.status(200).json({data:newuser,token:token,succes:true});
     }
     catch(error){
@@ -29,16 +29,18 @@ let signup=async(req,res)=>{
 let signin=async(req,res)=>{
     let {email,password}=req.body;
     try{
-    let user=await User.findOne({email});
-    if (!user) res.status(400).json({data:"user does not exist",success:false});
+        console.log("before find");
+        let user=await User.findOne({email});
+        if (!user) return res.status(200).json({data:"user does not exist",success:false});
+        console.log("after find");
 
     let checkpass=await bcrypt.compare(password,user.password);
-    if(!checkpass) res.status(400).json({data:"incorect password",success:false});
+    if(!checkpass) return res.status(200).json({data:"incorect password",success:false});
     
     let token=jwt.sign({email:user.email,id:user._id},JWT_SECERET);
     return res.status(200).json({data:user,token:token,success:true});
     }catch(error){
-        // console.log(error);
+        console.log(error);
         return res.status(500).json({data:"internal server error",success:false});
     }
 }
