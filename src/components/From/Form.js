@@ -11,7 +11,7 @@ function Form() {
   let classes = useStyles();
   let [postData, setpostData] = useState({ title: "", message: "", tags: "", selectedFile: null })
   let { currentid, setcurrentid } = useContext(Postcontext);
-  let post = useSelector((state) => currentid ? state.post.find((message) => message._id === currentid) : null);
+  let post = useSelector((state) => currentid ? state.post.posts.find((message) => message._id === currentid) : null);
   let dispatch = useDispatch();
   let {user}=useContext(usercontext);
   useEffect(() => {

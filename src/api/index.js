@@ -14,7 +14,9 @@ API.interceptors.request.use((req)=>{
     }
     return req
 })
-export let fetchposts=()=>API.get(url);
+export let fetchposts=(page)=>API.get(`post?page=${page}`);
+
+export let featchpostbysearch=(searchquery)=>API.get(`${url}search?search=${searchquery.search}&tags=${searchquery.tags}`);
 
 export let creatPost=(newPost)=>API.post(url,newPost);
 

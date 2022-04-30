@@ -8,12 +8,13 @@ export let Authentication=(state={authdata:null},action)=>{
             localStorage.setItem("userdata",JSON.stringify(action.payload.result));
             localStorage.setItem("token",action.payload.token);
             return {...state,authdata:action.payload}
-            case SIGNUP:
-                console.log(action.payload);
-                localStorage.setItem("userdata",JSON.stringify(action.payload.data));
+        case SIGNUP:
+            console.log(action.payload);
+            localStorage.setItem("userdata",JSON.stringify(action.payload.data));
             localStorage.setItem("token",action.payload.token);
             return {...state,authdata:action.payload}
-            case SIGNIN:
+        
+       case SIGNIN:
                 console.log("here",action.payload);
                 localStorage.setItem("userdata",JSON.stringify(action.payload.data));
                 localStorage.setItem("token",action.payload.token);

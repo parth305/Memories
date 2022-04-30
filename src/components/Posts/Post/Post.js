@@ -11,11 +11,13 @@ import PostContext from "../../../contextapi/UpdatePost/updatepostcontext"
 import { useDispatch } from 'react-redux';
 import { deletepost, likepost } from '../../../State/actioncreators/posts';
 import usercontext from '../../../contextapi/user/usercontext';
+import alertcontext from '../../../contextapi/Alert/alertcontext';
 function Post({post}) {
   let {setcurrentid}=useContext(PostContext);
     let classes=useStyles();
   let dispatch= useDispatch();
   let {user}=useContext(usercontext);
+  let {showalert}=useContext(alertcontext);
   // console.log("heheheheh",user.googleId,post.creator);
   const Likes = () => {
     if (post.likes.length > 0 && user) {
@@ -30,7 +32,7 @@ function Post({post}) {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised elevation={9}>
        <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} title={post.title} />
       <div className={classes.overlay}>
         <Typography variant="h6">{post.name}</Typography>
@@ -53,7 +55,7 @@ function Post({post}) {
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" disabled={!user?true:false} onClick={() => {dispatch(likepost(post._id))}} ><Likes/> </Button>
         {user && (user.googleId===post.creator || user._id===post.creator) &&(
-        <Button size="small" color="primary" onClick={() => {dispatch(deletepost(post._id))}}><DeleteIcon fontSize="small" /> Delete</Button>
+        <Button size="small" color="primary" onClick={() => {dispatch(deletepost(post._id,showalert))}}><DeleteIcon fontSize="small" /> Delete</Button>
         )}
   </CardActions>
     </Card>

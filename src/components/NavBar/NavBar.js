@@ -1,19 +1,22 @@
-import React, { useContext,useEffect } from 'react'
-import { Link, useLocation } from "react-router-dom"
+import React, { useContext, useEffect } from 'react'
+import { Link, NavLink, useLocation } from "react-router-dom"
 import { AppBar, Avatar, Typography, Button, Toolbar } from "@material-ui/core"
 import useStyles from "./styles"
 import usercontext from '../../contextapi/user/usercontext';
 import decode from "jwt-decode"
 function NavBar() {
     let classes = useStyles();
-    let location=useLocation();
+    let location = useLocation();
     let { user, setuser } = useContext(usercontext);
     useEffect(() => {
         console.log("hello from nav bar");
-        let token=localStorage.getItem("token");
-        if(token){
-            let decodedata=decode(token);
-            if(decodedata.exp*1000<new Date().getTime()) logout();
+        let token = localStorage.getItem("token");
+        if (token) {
+            let decodedata = decode(token);
+            if (decodedata.exp * 1000 < new Date().getTime()) logout();
+        }
+        else {
+            logout();
         }
         setuser(JSON.parse(localStorage.getItem("userdata")))
     }, [location])
@@ -22,16 +25,13 @@ function NavBar() {
         localStorage.clear()
         setuser(null)
     }
-   
+
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
-            <div className={classes.brandContainer}>
-
-                <Typography component={Link} to="/" className={classes.heading} align="center" variant="h2">
-                    Memories
-                    <img className={classes.image} src="http://bit.ly/memories_image" alt="memories" height="60"></img>
-                </Typography>
-            </div>
+            <Link to="/" className={classes.brandContainer}>
+                <img src="https://i.ibb.co/cvkcJFm/memories-Text.png" alt="Icon" height="45px" />
+                <img className={classes.image} src="https://i.ibb.co/NyJqJWK/memories-Logo.png" alt="memories" height="40px"></img>
+            </Link>
             <Toolbar className={classes.toolbar}>
 
                 {
@@ -42,7 +42,7 @@ function NavBar() {
                             <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
                         </div>
                     ) : (
-                        <Button component={Link} variant="contained" to={location.pathname==="/"?"/auth":"/"} color='primary' >{location.pathname==="/"?"Sign In":"Home"}</Button>
+                        <Button component={Link} variant="contained" to={location.pathname === "/posts" ? "/auth" : "/posts"} color='primary' >{location.pathname === "/posts" ? "Sign In" : "Home"}</Button>
                     )
                 }
             </Toolbar>
