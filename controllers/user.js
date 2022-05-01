@@ -29,10 +29,10 @@ let signup=async(req,res)=>{
 let signin=async(req,res)=>{
     let {email,password}=req.body;
     try{
-        console.log("before find");
+        // console.log("before find");
         let user=await User.findOne({email});
         if (!user) return res.status(200).json({data:"user does not exist",success:false});
-        console.log("after find");
+        // console.log("after find");
 
     let checkpass=await bcrypt.compare(password,user.password);
     if(!checkpass) return res.status(200).json({data:"incorect password",success:false});

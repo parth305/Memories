@@ -17,7 +17,7 @@ let check=async(req,res,next)=>{
             console.log(data);
             req.userId=data.id
         }
-        console.log("token complete");
+        // console.log("token complete");
         console.log(req.userId);
         next();
     }

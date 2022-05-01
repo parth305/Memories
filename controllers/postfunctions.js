@@ -37,12 +37,12 @@ let addpost = async (req, res) => {
     try {
         // let post=req.body;
         let newpost = req.body
-        console.log("ctrateinhg", newpost);
+        // console.log("ctrateinhg", newpost);
         let savedpost = new Post({ ...newpost, creator: req.userId,tags:newpost.tags.split(" ") });
         await savedpost.save()
         res.status(200).json({ success: true, msg: "post added", data: savedpost })
     } catch (error) {
-        console.log("gheye");
+        // console.log("gheye");
         res.status(500).json({ success: false, msg: error.message })
     }
 }
@@ -55,6 +55,7 @@ let updatepost = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({ success: false, data: "No post found" });
         post={...post,tags:post.tags.split(" ")}
         let updatedpost = await Post.findByIdAndUpdate(_id, post, { new: true });
+        // console.log("updated post",updatedpost);
         res.status(200).json({ success: true, data: updatedpost });
     }
     catch (error) {
@@ -63,7 +64,7 @@ let updatepost = async (req, res) => {
 }
 
 let getpostbyid=async(req,res)=>{
-    console.log("inside server");
+    // console.log("inside server");
     try {
         let {id:_id}=req.params
         if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({ success: false, data: "No post found" });
@@ -97,7 +98,7 @@ let likepost = async (req, res) => {
         console.log(index);
         if (index !== -1) {
             post.likes = post.likes.filter((id) => id !== req.userId)
-            console.log("kakaka");
+            // console.log("kakaka");
         }
         else {
             post.likes.push(req.userId);
@@ -126,24 +127,24 @@ let getpostbysearch = async (req, res) => {
 
         if (tags === "" && search !== "") {
             posts = await Post.find({ title })
-            console.log("one");
+            // console.log("one");
         }
         else if (search === "" && tags !== "") {
             // console.log( tag.split(","));
             posts = await Post.find({ tags: { $in: tags.split(",") } })
-            console.log("rwo");
+            // console.log("rwo");
         }
         else if (search !== "" && tags !== "") {
             posts = await Post.find({ $or: [{ title }, { tags: { $in: tags.split(",") } }] })
-            console.log("threee");
+            // console.log("threee");
         }
         else {
-            console.log("okay");
+            // console.log("okay");
             return res.status(200).json({ data: "no data found", success: false,empty:true })
         }
         // console.log(posts);
         if (posts.length === 0) {
-            console.log("no");
+            // console.log("no");
             return res.status(200).json({ data: "no data found", success: false })
         }
         // return res.status(200).json({ data: posts, success: true })
