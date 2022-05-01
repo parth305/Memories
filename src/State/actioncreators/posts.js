@@ -1,5 +1,5 @@
 import * as api from "../../api/index"
-import { CREATE, DELETE, END_LOADING, FETCH_ALL, FETCH_BY_SEARCH, LIKE, START_LOADING, UPDATE } from "../../constents/actionconstent";
+import { CREATE, DELETE, END_LOADING, FETCH_ALL, FETCH_BY_SEARCH, FIND_BY_ID, LIKE, SERACH_BY_TAG, START_LOADING, UPDATE } from "../../constents/actionconstent";
 export let getPost=(page)=>async (dispatch)=>{
     try {
         dispatch({type:START_LOADING});
@@ -13,6 +13,16 @@ export let getPost=(page)=>async (dispatch)=>{
     // dispatch(action)
 }
 
+export let getpostbyid=(id)=>async(dispatch)=>{
+    try {
+        dispatch({type:START_LOADING});
+        let {data}=await api.getpostbyid(id);
+        dispatch({type:FIND_BY_ID,payload:data.data})
+        dispatch({type:END_LOADING})
+    } catch (error) {
+        console.log(error);
+    }
+}
 export let getPostBySearch=({searchquery,showalert})=>async (dispatch)=>{
     try {
         // console.log(searchquery);
@@ -27,6 +37,19 @@ export let getPostBySearch=({searchquery,showalert})=>async (dispatch)=>{
         else{
         dispatch({type:FETCH_BY_SEARCH,payload:data})
         dispatch({type:END_LOADING})
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export let getpostbytags=(tags)=>async (dispatch)=>{
+    try {
+        console.log("tags",tags);
+        let {data}=await api.featchbytag(tags)
+        // console.log("action",data);
+        if(data.succes){
+        dispatch({type:SERACH_BY_TAG,payload:data.data})
         }
     } catch (error) {
         console.log(error);
@@ -63,7 +86,7 @@ export let deletepost=(id,showalert)=>async (dispatch)=>{
         // console.log(data);
         if(data.success){
             // alert(data.data)
-            showalert("error",data.data)
+            showalert("success",data.data)
             dispatch({type:DELETE,payload:id})
         }
         else{

@@ -1,6 +1,10 @@
-import {LIKE,UPDATE,CREATE,FETCH_ALL,DELETE, FETCH_BY_SEARCH, START_LOADING, END_LOADING} from "../../constents/actionconstent"
-let reducer=(state={isloading:true,posts:[]},action)=>{
+import {LIKE,UPDATE,CREATE,FETCH_ALL,DELETE, FETCH_BY_SEARCH, START_LOADING, END_LOADING, FIND_BY_ID, SERACH_BY_TAG} from "../../constents/actionconstent"
+let reducer=(state={isloading:true,posts:[],recomandedpost:[]},action)=>{
     switch (action.type) {
+        case SERACH_BY_TAG:
+            return {...state,recomandedpost:action.payload}
+        case FIND_BY_ID:
+            return {...state,post:action.payload}
         case START_LOADING:
             return {...state,isloading:true}
         case END_LOADING:

@@ -18,6 +18,10 @@ export let fetchposts=(page)=>API.get(`post?page=${page}`);
 
 export let featchpostbysearch=(searchquery)=>API.get(`${url}search?search=${searchquery.search}&tags=${searchquery.tags}`);
 
+export let getpostbyid=(id)=>API.get(`${url}${id}`);
+
+export let featchbytag=(tags)=>API.get(`${url}/findbytags/${tags}`);
+
 export let creatPost=(newPost)=>API.post(url,newPost);
 
 export let updatepost=(id,updatedpost)=>API.patch(`${url}${id}`,updatedpost);

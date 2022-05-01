@@ -18,9 +18,9 @@ function Home() {
   let query = useQuery();
   let page=query.get("page") || 1;
   console.log("query page",page);
-  let searchQuery=query.get("searchQuery");
+  // let searchQuery=query.get("searchQuery");
   let navigate = useNavigate();
-  let location = useLocation();
+  // let location = useLocation();
   let classes = useStyles();
   let disptach = useDispatch();
   let [search,setsearch]=useState("");
