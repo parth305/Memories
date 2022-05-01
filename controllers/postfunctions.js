@@ -38,7 +38,7 @@ let addpost = async (req, res) => {
         // let post=req.body;
         let newpost = req.body
         console.log("ctrateinhg", newpost);
-        let savedpost = new Post({ ...newpost, creator: req.userId });
+        let savedpost = new Post({ ...newpost, creator: req.userId,tags:newpost.tags.split(" ") });
         await savedpost.save()
         res.status(200).json({ success: true, msg: "post added", data: savedpost })
     } catch (error) {
@@ -53,12 +53,25 @@ let updatepost = async (req, res) => {
     let post = req.body
     try {
         if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({ success: false, data: "No post found" });
-
+        post={...post,tags:post.tags.split(" ")}
         let updatedpost = await Post.findByIdAndUpdate(_id, post, { new: true });
         res.status(200).json({ success: true, data: updatedpost });
     }
     catch (error) {
         res.status(500).json({ success: false, data: "internal server error" })
+    }
+}
+
+let getpostbyid=async(req,res)=>{
+    console.log("inside server");
+    try {
+        let {id:_id}=req.params
+        if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({ success: false, data: "No post found" });
+        let post=await Post.findById({_id});
+        // console.log(post);
+        return res.status(200).json({data:post,succes:true});
+    } catch (error) {
+        return res.status(200).json({data:error.message,success:false})
     }
 }
 let deletepost = async (req, res) => {
@@ -130,6 +143,7 @@ let getpostbysearch = async (req, res) => {
         }
         // console.log(posts);
         if (posts.length === 0) {
+            console.log("no");
             return res.status(200).json({ data: "no data found", success: false })
         }
         // return res.status(200).json({ data: posts, success: true })
@@ -138,4 +152,19 @@ let getpostbysearch = async (req, res) => {
         console.log(error);
     }
 }
-module.exports = { getpost, addpost, updatepost, deletepost, likepost, getpostbysearch }
+
+let getpostbytags=async (req,res)=>{
+    try {
+        // console.log("tags");
+       let {tags} = req.params;
+    //    console.log(req.params);
+    //    console.log(req.body);
+       let posts=await Post.find( { tags: { $in: tags.split(" ") } })
+       console.log(posts);
+        return res.status(200).json({succes:true,data:posts})
+    } catch (error) {
+        console.log(error);
+        res.status(200).json({succes:false,data:"zero"})
+    }
+}
+module.exports = { getpost, addpost, updatepost, deletepost, likepost, getpostbysearch,getpostbyid ,getpostbytags}
