@@ -1,5 +1,5 @@
 const express=require("express");
-const {getpost,addpost,updatepost, deletepost, likepost,getpostbysearch, getpostbyid, getpostbytags}=require("../controllers/postfunctions");
+const {getpost,addpost,updatepost, deletepost, likepost,getpostbysearch, getpostbyid, getpostbytags, addcmt}=require("../controllers/postfunctions");
 const { body, validationResult } = require('express-validator');
 const check = require("../middleware/verifyuser");
 // const { getPostBySearch } = require("../../client/src/State/actioncreators/posts");
@@ -14,5 +14,6 @@ router.use(check)
 router.route("/").post(addpost);
 router.route("/:id").patch(updatepost).delete(deletepost);
 router.route("/:id/likepost").patch(likepost);
+router.route("/cmt/:id").patch(addcmt)
 
 module.exports=router

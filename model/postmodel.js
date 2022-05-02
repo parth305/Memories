@@ -1,5 +1,10 @@
 const mongoose=require("mongoose");
 
+let CommentSchema=new mongoose.Schema({
+    user:String,
+    cmt:String
+})
+
 let postschema=new mongoose.Schema({
 
     creator:String,
@@ -22,7 +27,11 @@ let postschema=new mongoose.Schema({
     date:{
         type:Date,
         default:new Date()
-    }
+    },
+    Comment:[{
+        user:String,
+        cmt:String
+    }]
 })
 
 module.exports=mongoose.model("Post",postschema);

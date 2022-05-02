@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const { default: mongoose } = require("mongoose");
 
 const Post = require("../model/postmodel");
+const User=require("../model/usermodel")
 let getpost = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -38,8 +39,9 @@ let addpost = async (req, res) => {
         // let post=req.body;
         let newpost = req.body
         // console.log("ctrateinhg", newpost);
-        let savedpost = new Post({ ...newpost, creator: req.userId,tags:newpost.tags.split(" ") });
+        let savedpost = new Post({ ...newpost, creator: req.userId,tags:newpost.tags.split(" "),Comment:[] });
         await savedpost.save()
+        console.log(savedpost);
         res.status(200).json({ success: true, msg: "post added", data: savedpost })
     } catch (error) {
         // console.log("gheye");
@@ -168,4 +170,25 @@ let getpostbytags=async (req,res)=>{
         res.status(200).json({succes:false,data:"zero"})
     }
 }
-module.exports = { getpost, addpost, updatepost, deletepost, likepost, getpostbysearch,getpostbyid ,getpostbytags}
+
+let addcmt=async (req,res)=>{
+    try {
+        let {name,cmt}=req.body
+        console.log(name,cmt);
+        let {id:_id}=req.params
+        if (!req.userId) return res.status(400).json({ success: false, data: "unauthenticated" });
+        let user=await User.findById(req.userId);
+        console.log(user);
+        let post=await Post.findById(_id);
+        console.log("cmot",post.Comment);
+        post={...post._do,Comment:post.Comment.concat({user:name,cmt:cmt})}
+        console.log(post);
+        let updatedpost = await Post.findByIdAndUpdate(_id, post, { new: true });
+        console.log("udpado",updatedpost);
+        return res.status(200).json({data:updatedpost,succes:true});
+    } catch (error) {
+        console.log(error);
+        res.status(200).json({succes:false,data:"fail"})
+    }
+}
+module.exports = { getpost, addpost, updatepost, deletepost, likepost, getpostbysearch,getpostbyid ,getpostbytags,addcmt}

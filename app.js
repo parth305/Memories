@@ -19,6 +19,7 @@ app.use("/user",userrouter)
 
 // url=process.env.MONGO_URL
 url=process.env.LOCAL_DB
+// url="mongodb+srv://js_mastery:M6WfDnJEoj9HkV2d@practice.jto9p.mongodb.net/memories_app?retryWrites=true&w=majority";
 mongoose.connect(url).then(() => {
     app.listen(port,()=>{
         console.log("app started")
