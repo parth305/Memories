@@ -1,5 +1,5 @@
 import * as api from "../../api/index"
-import { CREATE, DELETE, END_LOADING, FETCH_ALL, FETCH_BY_SEARCH, FIND_BY_ID, LIKE, SERACH_BY_TAG, START_LOADING, UPDATE } from "../../constents/actionconstent";
+import { COMMENT, CREATE, DELETE, END_LOADING, FETCH_ALL, FETCH_BY_SEARCH, FIND_BY_ID, LIKE, SERACH_BY_TAG, START_LOADING, UPDATE } from "../../constents/actionconstent";
 export let getPost=(page)=>async (dispatch)=>{
     try {
         dispatch({type:START_LOADING});
@@ -73,7 +73,8 @@ export let creatPost=(Post)=>async (dispatch)=>{
 
 export let updatepost=(id,newpost)=> async (dispatch)=>{
     try {
-        let {data}=await api.updatepost(id,newpost)
+        console.log("new post",newpost);
+        let {data}=await api.updatepost(id,{...newpost,tags:newpost.tags.trim()})
         dispatch({type:UPDATE,payload:data.data});
     } catch (error) {
         console.log(error);
@@ -106,4 +107,14 @@ export let likepost=(id)=>async (dispatch)=>{
         } catch (error) {
             console.log(error);
         }
+}
+
+export let newComment=({id,cmtdata})=>async(dispatch)=>{
+    try {
+        let {data}=await api.sendcmt(cmtdata,id)
+        console.log(data);
+        dispatch({type:COMMENT,payload:data.data})
+    } catch (error) {
+        console.log(error);
+    }
 }

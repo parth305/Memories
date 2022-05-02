@@ -7,7 +7,7 @@ import {Grid,CircularProgress} from "@material-ui/core"
 function Posts() {
     let classes=useStyles();
     let posts=useSelector((state)=>state.post);
-    console.log("posts",posts);
+    // console.log("posts",posts);
     // let posts=data
   if(posts.posts.length===0 && !posts.isloading) return "No Data to Show"
   return (

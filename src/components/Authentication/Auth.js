@@ -28,7 +28,7 @@ function Auth() {
         let result = res.profileObj
         let token = res.tokenId
         setuser(result)
-        console.log(result);
+        // console.log(result);
         dispatch(Authaction({ result, token }));
         navigate("/")
     }
@@ -40,8 +40,8 @@ function Auth() {
         event.preventDefault();
         if(issignup){
                 if (formData.password===formData.confirmpassword){
-                    console.log("hey");
-                    console.log(formData);
+                    // console.log("hey");
+                    // console.log(formData);
                 dispatch(signup(formData,navigate))
             }
             else{
@@ -50,7 +50,7 @@ function Auth() {
                 }
             }
             else{
-                console.log(formData)
+                // console.log(formData)
                 dispatch(signin(formData,navigate,showalert))
             }  
             setTimeout(() => {

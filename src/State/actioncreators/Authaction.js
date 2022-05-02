@@ -12,7 +12,7 @@ export let signup = (formData, navigate) => async (dispatch) => {
     try {
 
         let { data } = await api.signup(formData);
-        console.log(data);
+        // console.log(data);
         dispatch({ type: "SIGNUP", payload: data })
 
         navigate("/")
@@ -24,7 +24,7 @@ export let signup = (formData, navigate) => async (dispatch) => {
 export let signin = (formData, navigate,showalert) => async (dispatch) => {
     try {
         let { data } = await api.singin(formData);
-        console.log("this is data", data);
+        // console.log("this is data", data);
         if (!data.success) {
             showalert("error", data.data)
         }

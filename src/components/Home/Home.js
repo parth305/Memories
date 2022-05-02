@@ -68,7 +68,7 @@ function Home() {
     }
   }
   useEffect(() => {
-    console.log("kaksakskaksalslasl");
+    // console.log("kaksakskaksalslasl");
     if(search===""){
     disptach(getPost());
     navigate("/posts")

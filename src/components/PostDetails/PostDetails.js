@@ -11,6 +11,7 @@ import useStyles from './styles';
 import alertcontext from "../../contextapi/Alert/alertcontext";
 import { getpostbytags } from "../../State/actioncreators/posts";
 import tagcontext from "../../contextapi/Tags/tagcontext";
+import Comments from "./Comments";
 let reccomandedposts=[]
 function PostDetails() {
   let { post, posts, isloading ,recomandedpost} = useSelector((state) => state.post);
@@ -69,7 +70,7 @@ function PostDetails() {
           <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
           <Divider style={{ margin: '20px 0px' }} />
           <hr />
-          <Typography variant="body1"><strong>Comments - coming soon!</strong></Typography>
+          <Comments expost={post}/>
           <Divider style={{ margin: '20px 0px' }} />
         </div>
         <div className={classes.imageSection}>

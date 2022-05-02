@@ -6,6 +6,7 @@ export let CREATE="CREATE";
 export let FETCH_BY_SEARCH="FEATCH_BY_SEARCH";
 export let FIND_BY_ID="FIND_BY_ID";
 export let SERACH_BY_TAG="SEARCH_BY_TAG"
+export let COMMENT="COMMENT";
 
 export let START_LOADING="START_LOADING";
 export let END_LOADING="END_LOADING";

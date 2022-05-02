@@ -16,8 +16,9 @@ function Form() {
   let {user}=useContext(usercontext);
   useEffect(() => {
     if (post) {
+      post={...post,tags:post.tags.join(" ")}
       setpostData(post)
-      console.log(post);
+      // console.log("after cliecking",post);
     }
   }, [currentid, dispatch])
   let handlesubmit = (e) => {

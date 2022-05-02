@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import useStyles from "./styles";
 import { Card, CardActions, CardContent, Typography, CardMedia, Button, ButtonBase } from "@material-ui/core"
 import ThumbUpOutlined from '@material-ui/icons/ThumbUpOutlined';
@@ -13,6 +13,19 @@ import { deletepost, getpostbyid, likepost } from '../../../State/actioncreators
 import usercontext from '../../../contextapi/user/usercontext';
 import alertcontext from '../../../contextapi/Alert/alertcontext';
 import { Navigate, useNavigate } from "react-router-dom";
+
+const Likes = ({post,user}) => {
+  if (post.likes.length > 0 && user) {
+    return post.likes.find((like) => like === (user.googleId || user._id))
+      ? (
+        <><ThumbUpAltIcon fontSize="small" />&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}`}</>
+      ) : (
+        <><ThumbUpAltOutlined fontSize="small" />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</>
+      );
+  }
+  return <><ThumbUpOutlined fontSize="small" />&nbsp;Like</>;
+};
+
 function Post({ post }) {
   let { setcurrentid } = useContext(PostContext);
   let classes = useStyles();
@@ -21,22 +34,24 @@ function Post({ post }) {
   let { showalert } = useContext(alertcontext);
   let navigate = useNavigate();
   // console.log("heheheheh",user.googleId,post.creator);
+  let [likes,setlikes]=useState(post.likes);
+  // let userid=user!==null?(user.googleId || user._id):null
+  // let userhaslikedpost=post.likes.find((like) => like === (user.googleId || user._id));
   const openPost = () => {
     // dispatch(getpostbyid(post._id))
     navigate(`${post._id}`)
   }
-  const Likes = () => {
-    if (post.likes.length > 0 && user) {
-      return post.likes.find((like) => like === (user.googleId || user._id))
-        ? (
-          <><ThumbUpAltIcon fontSize="small" />&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}`}</>
-        ) : (
-          <><ThumbUpAltOutlined fontSize="small" />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</>
-        );
-    }
-    return <><ThumbUpOutlined fontSize="small" />&nbsp;Like</>;
-  };
+  
+  let handlelike=() => { 
+    dispatch(likepost(post._id)) 
+    // if (userhaslikedpost){
+      // setlikes(likes.filter((id)=>id!==userid))
+    // }
+    // else{
+      // setlikes(likes.concat(userid))
+    // }
 
+  }
 
   return (
     <Card className={classes.card} raised elevation={9}>
@@ -65,7 +80,7 @@ function Post({ post }) {
         </CardContent>
         </ButtonBase>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" disabled={!user ? true : false} onClick={() => { dispatch(likepost(post._id)) }} ><Likes /> </Button>
+        <Button size="small" color="primary" disabled={!user ? true : false} onClick={handlelike} ><Likes post={post} user={user} /> </Button>
         {user && (user.googleId === post.creator || user._id === post.creator) && (
           <Button size="small" color="primary" onClick={() => { dispatch(deletepost(post._id, showalert)) }}><DeleteIcon fontSize="small" /> Delete</Button>
           )}

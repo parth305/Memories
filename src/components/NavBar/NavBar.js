@@ -9,7 +9,7 @@ function NavBar() {
     let location = useLocation();
     let { user, setuser } = useContext(usercontext);
     useEffect(() => {
-        console.log("hello from nav bar");
+        // console.log("hello from nav bar");
         let token = localStorage.getItem("token");
         if (token) {
             let decodedata = decode(token);

@@ -7,8 +7,7 @@ import { getPost } from "../../State/actioncreators/posts";
 
 let Paginate=({page})=>{
     const classes=useStyles();
-    console.log("page",page
-    );
+    // console.log("page",page);
     let {totalPages}=useSelector((state)=>state.post);
     // console.log("total",posts);
     let dispatch=useDispatch();

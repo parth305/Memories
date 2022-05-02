@@ -15,13 +15,7 @@ export default makeStyles((theme) => ({
       flexWrap: 'wrap',
       flexDirection: 'column',
     },
-    // border:"5px solid red"
-    background:"white"
   },
-  shadow:{
-    boxShadow: "14px 15px 5px 0px rgba(0,0,0,0.75)"
-  }
-  ,
   section: {
     borderRadius: '20px',
     margin: '10px',
@@ -41,6 +35,23 @@ export default makeStyles((theme) => ({
     },
   },
   loadingPaper: {
-    display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+    borderRadius: '15px',
+    height: '39vh',
   },
+  commentsOuterContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  commentsInnerContainer: {
+    height: '200px',
+    overflowY: 'auto',
+    marginRight: '30px',
+  },
+  shadow:{
+    boxShadow: "14px 15px 5px 0px rgba(0,0,0,0.75)"
+  }
 }));

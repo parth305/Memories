@@ -14,6 +14,8 @@ API.interceptors.request.use((req)=>{
     }
     return req
 })
+
+export let sendcmt=(data,id)=>API.patch(`${url}/cmt/${id}`,data);
 export let fetchposts=(page)=>API.get(`post?page=${page}`);
 
 export let featchpostbysearch=(searchquery)=>API.get(`${url}search?search=${searchquery.search}&tags=${searchquery.tags}`);
