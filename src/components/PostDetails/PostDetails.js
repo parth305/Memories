@@ -67,7 +67,7 @@ function PostDetails() {
           <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0px',color:"black" }} />
           <hr />
-          <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography>
+          {/* <Typography variant="body1"><strong>Realtime Chat - coming soon!</strong></Typography> */}
           <Divider style={{ margin: '20px 0px' }} />
           <hr />
           <Comments expost={post}/>
@@ -87,7 +87,7 @@ function PostDetails() {
               <div  className={classes.shadow} style={{margin:"20px",padding:"5px",elevation:"6",borderRadius:"8px",cursor:"pointer",border:"1px solid black"}} onClick={()=>openPost(_id)} key={_id} >
                   <Typography gutterBottom variant="h6">{title}</Typography>
                   <Typography gutterBottom variant="subtitle2">{name}</Typography>
-                  <Typography gutterBottom variant="subtitle2">{message}</Typography>
+                  <Typography gutterBottom variant="subtitle2">{message.slice(0,100)}...</Typography>
                   <Typography gutterBottom variant="subtitle1">Likes:{likes.length}</Typography>
                   <img src={selectedFile ||"https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"} width="200px"/>
                 </div>

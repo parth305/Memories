@@ -17,7 +17,7 @@ function Home() {
   let {showalert}=useContext(alertcontext);
   let query = useQuery();
   let page=query.get("page") || 1;
-  console.log("query page",page);
+  // console.log("query page",page);
   // let searchQuery=query.get("searchQuery");
   let navigate = useNavigate();
   // let location = useLocation();

@@ -76,7 +76,7 @@ function Post({ post }) {
         <Typography className={classes.title} gutterBottom variant="h5" component="h2">{post.title}</Typography>
 
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
+          <Typography variant="body2" color="textSecondary" component="p">{post.message.slice(0,100)}....</Typography>
         </CardContent>
         </ButtonBase>
       <CardActions className={classes.cardActions}>

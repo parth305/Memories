@@ -4,6 +4,7 @@ import { AppBar, Avatar, Typography, Button, Toolbar } from "@material-ui/core"
 import useStyles from "./styles"
 import usercontext from '../../contextapi/user/usercontext';
 import decode from "jwt-decode"
+import logo from "../../../src/logo.png"
 function NavBar() {
     let classes = useStyles();
     let location = useLocation();
@@ -29,8 +30,9 @@ function NavBar() {
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
             <Link to="/" className={classes.brandContainer}>
-                <img src="https://i.ibb.co/cvkcJFm/memories-Text.png" alt="Icon" height="45px" />
-                <img className={classes.image} src="https://i.ibb.co/NyJqJWK/memories-Logo.png" alt="memories" height="40px"></img>
+                <img src={logo} alt="Icon" height="65px" />
+                {/* <img src="https://i.ibb.co/cvkcJFm/memories-Text.png" alt="Icon" height="45px" /> */}
+                {/* <img className={classes.image} src="https://i.ibb.co/NyJqJWK/memories-Logo.png" alt="memories" height="40px"></img> */}
             </Link>
             <Toolbar className={classes.toolbar}>
 

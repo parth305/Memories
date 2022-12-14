@@ -9,7 +9,7 @@ function TagState(props) {
     let [tagpost,settagpost]=useState([]);
     let getpostbytag=async(tags)=>{
         let {data}=await API.get(`${url}/findbytags/${tags}`)
-        console.log(data);
+        // console.log(data);
         if(data.succes){
             // console.log(data.data);
             settagpost(data.data);

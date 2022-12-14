@@ -73,7 +73,7 @@ export let creatPost=(Post)=>async (dispatch)=>{
 
 export let updatepost=(id,newpost)=> async (dispatch)=>{
     try {
-        console.log("new post",newpost);
+        // console.log("new post",newpost);
         let {data}=await api.updatepost(id,{...newpost,tags:newpost.tags.trim()})
         dispatch({type:UPDATE,payload:data.data});
     } catch (error) {
@@ -100,9 +100,9 @@ export let deletepost=(id,showalert)=>async (dispatch)=>{
 
 export let likepost=(id)=>async (dispatch)=>{
         try {
-            console.log(id);
+            // console.log(id);
             let {data}=await api.likecount(id)
-            console.log(data);
+            // console.log(data);
             dispatch({type:LIKE,payload:data.data});
         } catch (error) {
             console.log(error);
@@ -112,7 +112,7 @@ export let likepost=(id)=>async (dispatch)=>{
 export let newComment=({id,cmtdata})=>async(dispatch)=>{
     try {
         let {data}=await api.sendcmt(cmtdata,id)
-        console.log(data);
+        // console.log(data);
         dispatch({type:COMMENT,payload:data.data})
     } catch (error) {
         console.log(error);

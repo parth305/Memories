@@ -30,6 +30,7 @@ export default makeStyles((theme) => ({
   },
   recommendedPosts: {
     display: 'flex',
+    width:'300px',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
