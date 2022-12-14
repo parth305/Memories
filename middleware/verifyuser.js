@@ -9,16 +9,16 @@ let check=async(req,res,next)=>{
     let isgoogletoken=token.length>500;
         if(isgoogletoken){
             let decodedata=jwt.decode(token);
-            console.log(decodedata);
+            // console.log(decodedata);
             req.userId=decodedata.sub
         }
         else{
             let data=jwt.verify(token,JWT_SECERET);
-            console.log(data);
+            // console.log(data);
             req.userId=data.id
         }
         // console.log("token complete");
-        console.log(req.userId);
+        // console.log(req.userId);
         next();
     }
     catch(error){

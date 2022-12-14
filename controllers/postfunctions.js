@@ -39,9 +39,12 @@ let addpost = async (req, res) => {
         // let post=req.body;
         let newpost = req.body
         // console.log("ctrateinhg", newpost);
-        let savedpost = new Post({ ...newpost, creator: req.userId,tags:newpost.tags.split(" "),Comment:[] });
+        // if (newpost.tags===""){
+        //     newpost={...newpost,tags:[]}
+        // }
+        let savedpost = new Post({ ...newpost, creator: req.userId,tags:newpost.tags===""?[]:newpost.tags.split(" "),Comment:[] });
         await savedpost.save()
-        console.log(savedpost);
+        // console.log(savedpost);
         res.status(200).json({ success: true, msg: "post added", data: savedpost })
     } catch (error) {
         // console.log("gheye");
@@ -55,7 +58,7 @@ let updatepost = async (req, res) => {
     let post = req.body
     try {
         if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({ success: false, data: "No post found" });
-        post={...post,tags:post.tags.split(" ")}
+        post={...post,tags:post.tags===""?[]:post.tags.split(" ")}
         let updatedpost = await Post.findByIdAndUpdate(_id, post, { new: true });
         // console.log("updated post",updatedpost);
         res.status(200).json({ success: true, data: updatedpost });
@@ -163,7 +166,7 @@ let getpostbytags=async (req,res)=>{
     //    console.log(req.params);
     //    console.log(req.body);
        let posts=await Post.find( { tags: { $in: tags.split(" ") } })
-       console.log(posts);
+    //    console.log(posts);
         return res.status(200).json({succes:true,data:posts})
     } catch (error) {
         console.log(error);
@@ -174,17 +177,17 @@ let getpostbytags=async (req,res)=>{
 let addcmt=async (req,res)=>{
     try {
         let {name,cmt}=req.body
-        console.log(name,cmt);
+        // console.log(name,cmt);
         let {id:_id}=req.params
         if (!req.userId) return res.status(400).json({ success: false, data: "unauthenticated" });
-        let user=await User.findById(req.userId);
-        console.log(user);
+        // let user=await User.findById(req.userId);
+        // console.log(user);
         let post=await Post.findById(_id);
-        console.log("cmot",post.Comment);
+        // console.log("cmot",post.Comment);
         post={...post._do,Comment:post.Comment.concat({user:name,cmt:cmt})}
-        console.log(post);
+        // console.log(post);
         let updatedpost = await Post.findByIdAndUpdate(_id, post, { new: true });
-        console.log("udpado",updatedpost);
+        // console.log("udpado",updatedpost);
         return res.status(200).json({data:updatedpost,succes:true});
     } catch (error) {
         console.log(error);
